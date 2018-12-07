@@ -94,5 +94,23 @@ class AuthTestCase(APITestCase):
         response = mods.post('authentication/login', json=data, response=True) #trying logging
         self.assertEqual(response.status_code, 200)  #user exits 
 
+
+    def test_signup_exits(self):
+        data = {'username': 'voter1', 'password': '123'}
+        response = mods.get('authentication/signup', json=data, response=True) #getting the html
+        self.assertEqual(response.status_code, 200)  
+        response = mods.post('authentication/login', json=data, response=True) #trying logging
+        self.assertEqual(response.status_code, 200)  #ok 
+        token = response.json()
+        response = self.client.post('/authentication/getuser/', token, format='json')
+        self.assertEqual(response.status_code, 200)  #user exits  
+ 
+    def test_signup_error(self):
+        data = {'username': 'voter1', 'password': '1'}
+        response = mods.get('authentication/signup', json=data, response=True) #getting the html
+        self.assertEqual(response.status_code, 200)  
+        
+        #TODO
+
       
 

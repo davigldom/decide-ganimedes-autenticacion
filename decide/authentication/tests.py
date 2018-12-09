@@ -106,11 +106,15 @@ class AuthTestCase(APITestCase):
         self.assertEqual(response.status_code, 200)  #user exits  
  
     def test_signup_error(self):
-        data = {'username': 'voter1', 'password': '1'}
+        data = {'username': 'voter1', 'password': '1'} #user exits, but wrong psswd
         response = mods.get('authentication/signup', json=data, response=True) #getting the html
         self.assertEqual(response.status_code, 200)  
-        
-        #TODO
+        response = mods.post('authentication/login', json=data, response=True) #trying logging
+        self.assertNotEqual(response.status_code, 200)  #no ok
+        token = response.json() 
+        response = self.client.post('/authentication/getuser/', token, format='json')
+        self.assertNotEqual(response.status_code, 200)  #but user exits
+       
 
       
 

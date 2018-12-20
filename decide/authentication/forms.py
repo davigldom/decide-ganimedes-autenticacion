@@ -1,6 +1,12 @@
 from django import forms
 from .models import User
 from django.contrib.auth.forms import UserCreationForm
+import datetime
+import pytz
+from django.utils import timezone
+
+
+
 
 class UserCreateForm(UserCreationForm):
     SEX_OPTIONS = (
@@ -11,9 +17,9 @@ class UserCreateForm(UserCreationForm):
     first_name = forms.CharField(required=False)
     last_name = forms.CharField(required=False)
     email = forms.EmailField(required=True)
-    birthdate = forms.DateTimeField(input_formats=['%d/%m/%Y'], help_text="Formato: dd/mm/YYYY", required=True)
+    birthdate = forms.DateTimeField(input_formats=['%d/%m/%Y'], help_text="Formato: dd/mm/YYYY", required=False)
     city = forms.CharField(required=True)
-    sex = forms.ChoiceField(choices=SEX_OPTIONS, required=True)
+    sex = forms.ChoiceField(choices=SEX_OPTIONS, required=False)
 
     class Meta:
         model = User
@@ -31,4 +37,26 @@ class UserCreateForm(UserCreationForm):
         if commit:
             user.save()
         return user
-    
+
+    #  validations  
+
+
+    def clean(self, *args, **kwargs):
+        cleaned_data = super(UserCreateForm, self).clean(*args, **kwargs)
+        email = cleaned_data.get('email', None)
+        if email is not None:# look for in db
+            users = User.objects.all()
+            for u in users:
+                if email==u.email:
+                    self.add_error('email', 'Email alredy exits')
+                    break
+
+                    
+        birthdate= cleaned_data.get('birthdate', None)
+        if birthdate is not None:
+            now = timezone.now()
+           
+            
+            if birthdate > now:
+                self.add_error('birthdate', 'Future date not posible')
+

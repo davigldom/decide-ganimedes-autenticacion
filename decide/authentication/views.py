@@ -192,12 +192,13 @@ def signUp(request):
             uid = urlsafe_base64_encode(force_bytes(user.pk)).decode()
             token = account_activation_token.make_token(user)
             activation_link = "http://{0}/authentication/activate/?uid={1}&token={2}".format(current_site, uid, token)
-            message = "Hello,\n {0}".format( activation_link)
+            message = "Thanks you for joining,\n You need to check this link to activate your account:\n {0} \n Best regards. \n Ganímedes team.".format(activation_link)
             
             to_email = formulario.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
-            return HttpResponse('Please confirm your email address to complete the registration')
+            activate_message = "http://{0}/?email=not_activate".format(current_site)
+            return HttpResponseRedirect(activate_message)
 
     else:
         formulario = UserCreateForm()
@@ -217,8 +218,8 @@ class Activate(APIView):
             user.is_active = True
             user.save()
             login(request, user)
-            login(request, user)
             # return redirect('home')
+            return HttpResponseRedirect('/?t=activate')
             return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
             # form = PasswordChangeForm(request.user)
             # return render(request, 'activation.html', {'form': form})
@@ -232,6 +233,6 @@ class Activate(APIView):
             user = form.save()
             update_session_auth_hash(request, user) # Important, to update the session with the new password
             return HttpResponse('Password changed successfully')
-            
+
 def form_login(request):
     return render(request, 'authentication/login.html')

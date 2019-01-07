@@ -5,7 +5,7 @@ urlpatterns = [
     path('login/', obtain_auth_token),
     path('logout/', LogoutView.as_view()),
     path('getuser/', GetUserView.as_view()),
-    path('signup/', signUp),   
+    path('signup/', signUp),
     path('contador/', contador),
     path('activate/', Activate.as_view(), name='activate'),
     path('obtain_auth_token_rrss/', obtain_auth_token_rrss),

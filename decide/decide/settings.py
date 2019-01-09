@@ -30,7 +30,6 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-from django.utils.translation import ugettext_lazy as _
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -40,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
+    'nocaptcha_recaptcha',
 
     'corsheaders',
     'django_filters',
@@ -221,3 +221,5 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
   'locale': 'es_ES',
   'fields': 'id, name, email, age_range'
 }
+NORECAPTCHA_SITE_KEY = '6LdhDYgUAAAAAEiExWkWXgbOsFbb74QoFdDJzcqm'
+NORECAPTCHA_SECRET_KEY = '6LdhDYgUAAAAAFc61sKda-9zzxhDnmpzgwE1PoS8'

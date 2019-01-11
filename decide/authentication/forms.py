@@ -24,9 +24,10 @@ class UserCreateForm(UserCreationForm):
     city = forms.CharField(label=_('City'),required=True)
     sex = forms.ChoiceField(label=_('Sex'),choices=SEX_OPTIONS, required=False)
     captcha = NoReCaptchaField()
+
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "email", "birthdate", "city", "sex", "password1", "password2")
+        fields = ("first_name", "last_name", "email", "birthdate", "city", "sex", "password1", "password2", "captcha")
     
     def save(self, commit=True):
         user = super(UserCreateForm, self).save(commit=False)

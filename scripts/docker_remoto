@@ -1,12 +1,10 @@
 #!/bin/bash
 
-#para lanzarlo desde local, necesario par de claves rsa (consultar https://github.com/decide-ganimedes-autenticacion/decide-ganimedes-autenticacion/wiki)
-#ssh x@ip_remota 'bash -s' < docker_remoto
+#para lanzarlo desde local es necesario par de claves rsa (consultar https://github.com/decide-ganimedes-autenticacion/decide-ganimedes-autenticacion/wiki)
+#ssh user@ip_remota 'bash -s' < docker_remoto
 
-#para actualización(necesario backup BD o BD en local. No procede en la asignatura)
-#sudo rm -R decide-ganimedes-autenticacion/
-#sudo docker rm$(sudo docker ps -a -q)
-#sudo docker rmi$(sudo docker images -q)
+
+sudo rm -R decide-ganimedes-autenticacion/
 
 git clone https://github.com/decide-ganimedes-autenticacion/decide-ganimedes-autenticacion.git
 
@@ -20,6 +18,12 @@ sudo add-apt-repository \
 sudo apt-get update
 sudo apt-get -y install docker-ce
 sudo snap install docker
-cd decide-ganimedes/docker
+cd decide-ganimedes-autenticacion/docker
+#para actualización real sería necesario backup BD o BD en local o no borrar todo
+sudo docker rm $(sudo docker ps -a -q)
+sudo docker rmi $(sudo docker images -q)
+
 sudo docker-compose up -d
+
+
 

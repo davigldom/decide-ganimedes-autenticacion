@@ -20,8 +20,9 @@ sudo apt-get -y install docker-ce
 sudo snap install docker
 cd decide-ganimedes-autenticacion/docker
 #para actualización real sería necesario backup BD o BD en local o no borrar todo
-sudo docker rm $(sudo docker ps -a -q)
-sudo docker rmi $(sudo docker images -q)
+sudo docker-compose down
+sudo docker rm $(sudo docker ps -a -q) -f
+sudo docker rmi $(sudo docker images -q) -f
 
 sudo docker-compose up -d
 

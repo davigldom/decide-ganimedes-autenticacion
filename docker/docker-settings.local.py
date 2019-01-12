@@ -27,16 +27,16 @@ MODULES = [
     'voting',
 ]
 
-BASEURL = 'http://35.246.81.197'
+BASEURL = 'http://10.5.0.1:8000'
 
 APIS = {
-    'authentication': 'http://35.246.81.197',
-    'base': 'http://35.246.81.197',
-    'booth': 'http://35.246.81.197',
-    'census': 'http://35.246.81.197',
-    'mixnet': 'http://35.246.81.197',
-    'postproc': 'http://35.246.81.197',
-    'store': 'http://35.246.81.197',
-    'visualizer': 'http://35.246.81.197',
-    'voting': 'http://35.246.81.197',
+    'authentication': 'http://10.5.0.1:8000',
+    'base': 'http://10.5.0.1:8000',
+    'booth': 'http://10.5.0.1:8000',
+    'census': 'http://10.5.0.1:8000',
+    'mixnet': 'http://10.5.0.1:8000',
+    'postproc': 'http://10.5.0.1:8000',
+    'store': 'http://10.5.0.1:8000',
+    'visualizer': 'http://10.5.0.1:8000',
+    'voting': 'http://10.5.0.1:8000',
 }

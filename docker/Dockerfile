@@ -22,3 +22,7 @@ RUN pip install -r requirements.txt
 WORKDIR /app/decide
 ADD docker-settings.py /app/decide/local_settings.py
 RUN ./manage.py collectstatic
+RUN apt-get update && apt-get install -y gettext libgettextpo-dev
+RUN docker-compose run --rm web django-admin makemessages -l es
+RUN docker-compose run --rm web django-admin makemessages -l ca
+RUN docker-compose run --rm web django-admin compilemessages

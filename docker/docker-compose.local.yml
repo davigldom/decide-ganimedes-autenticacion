@@ -5,7 +5,10 @@ services:
     restart: always
     container_name: decide_db
     image: postgres:11.1-alpine
-
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - decide
   web:
     restart: always
     container_name: decide_web
@@ -18,7 +21,8 @@ services:
       - static:/app/static
     depends_on:
       - db
-
+    networks:
+      - decide
   nginx:
     restart: always
     container_name: decide_nginx
@@ -29,10 +33,11 @@ services:
     volumes:
       - static:/app/static
     ports:
-      - "80:80"
+      - "8000:80"
     depends_on:
       - web
-
+    networks:
+      - decide
 
 volumes:
   static:
@@ -40,4 +45,10 @@ volumes:
   db:
     name: decide_db
 
-
+networks:
+  decide:
+    driver: bridge
+    ipam:
+     driver: default
+     config:
+       - subnet: 10.5.0.0/16

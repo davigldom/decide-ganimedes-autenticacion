@@ -25,6 +25,10 @@ sudo docker rm $(sudo docker ps -a -q) -f
 sudo docker rmi $(sudo docker images -q) -f
 
 sudo docker-compose up -d
+sudo docker exec decide_web ./manage.py makemigrations
+sudo docker exec decide_web ./manage.py migrate
 
+#para creación de superusuario
+sudo docker exec decide_web ./manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin@decide.com', 'practica')"
 
 
